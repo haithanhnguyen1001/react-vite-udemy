@@ -1,11 +1,20 @@
+/* eslint-disable react/jsx-key */
 const TodoData = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { name } = props;
+  const { todoList } = props;
+  console.log(todoList);
   return (
     <div className="todo-data">
-      <div className="todo-item">My name is {name}</div>
-      <div className="todo-item">Learning React</div>
-      <div className="todo-item">Watching Youtube</div>
+      {todoList.map((item, index) => {
+        return (
+          <div key={item.id} className="todo-item">
+            <div className="todo-name">
+              {item.id}. {item.name}
+            </div>
+            <button>X</button>
+          </div>
+        );
+      })}
     </div>
   );
 };

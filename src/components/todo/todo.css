@@ -52,6 +52,7 @@ body {
   margin-left: 10px;
   background: #5b75e3;
   color: #fff;
+  cursor: pointer;
 }
 
 .todo-data {
@@ -59,12 +60,32 @@ body {
   border-radius: 5px;
   padding: 10px;
   min-height: 300px;
+  max-height: 700px;
+  overflow-y: auto;
 }
 
 .todo-item {
   padding: 10px;
   border-bottom: 1px solid gray;
   text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.todo-item button {
+  padding: 5px 7px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background: red;
+  color: #fff;
+  cursor: pointer;
+}
+
+.todo-name {
+  white-space: nowrap; /* Prevents text from wrapping */
+  overflow: hidden; /* Hides the overflowed text */
+  text-overflow: ellipsis;
 }
 
 .todo-image img {
@@ -74,6 +95,7 @@ body {
 .logo {
   will-change: filter;
   transition: filter 300ms;
+  margin-top: 20px;
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
