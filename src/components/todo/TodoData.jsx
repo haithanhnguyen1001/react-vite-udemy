@@ -1,8 +1,11 @@
 /* eslint-disable react/jsx-key */
 const TodoData = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { todoList } = props;
-  console.log(todoList);
+  const { todoList, deleteTodo } = props;
+
+  const handleBtnDelete = (id) => {
+    deleteTodo(id);
+  };
   return (
     <div className="todo-data">
       {todoList.map((item, index) => {
@@ -11,7 +14,7 @@ const TodoData = (props) => {
             <div className="todo-name">
               {item.id}. {item.name}
             </div>
-            <button>X</button>
+            <button onClick={() => handleBtnDelete(item.id)}>X</button>
           </div>
         );
       })}

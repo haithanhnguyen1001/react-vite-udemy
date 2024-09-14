@@ -5,8 +5,17 @@ const TodoNew = (props) => {
   const { addNewTodo } = props;
   const [valueInput, setValueInput] = useState("");
   const handleClick = () => {
+    if (valueInput == "") {
+      return;
+    }
     addNewTodo(valueInput);
     setValueInput("");
+  };
+
+  const handleEnter = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
   };
 
   const handleOnChange = (name) => {
@@ -19,6 +28,7 @@ const TodoNew = (props) => {
         placeholder="Enter your task"
         value={valueInput}
         onChange={(event) => handleOnChange(event.target.value)}
+        onKeyDown={(event) => handleEnter(event)}
       />
       <button onClick={handleClick}>Add</button>
     </div>
