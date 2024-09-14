@@ -55,6 +55,10 @@ body {
   cursor: pointer;
 }
 
+.todo-input .btn-delete-all {
+  background-color: rgba(255, 0, 0, 0.729);
+}
+
 .todo-data {
   border: 1px solid gray;
   border-radius: 5px;

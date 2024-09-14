@@ -16,10 +16,14 @@ const App = () => {
     const newList = todoList.filter((item) => item.id !== id);
     setTodoList(newList);
   };
+
+  const deleteAllTodo = () => {
+    setTodoList([]);
+  };
   return (
     <div className="todo-container">
       <div className="todo-title">Todo List</div>
-      <TodoNew addNewTodo={addNewTodo} />
+      <TodoNew addNewTodo={addNewTodo} deleteAllTodo={deleteAllTodo} />
       {todoList.length > 0 ? (
         <TodoData todoList={todoList} deleteTodo={deleteTodo} />
       ) : (
