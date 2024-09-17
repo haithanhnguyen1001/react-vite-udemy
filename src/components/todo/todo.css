@@ -15,7 +15,8 @@ body {
 .todo-container {
   border: 2px solid #5b75e3;
   width: 500px;
-  min-height: 700px;
+  min-height: 300px;
+  max-height: 600px;
   background-color: #fff;
   position: absolute;
   top: 50%;
@@ -63,8 +64,7 @@ body {
   border: 1px solid gray;
   border-radius: 5px;
   padding: 10px;
-  min-height: 300px;
-  max-height: 500px;
+  max-height: 300px;
   overflow-y: auto;
 }
 
