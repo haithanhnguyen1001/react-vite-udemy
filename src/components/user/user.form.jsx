@@ -14,6 +14,12 @@ const UserForm = () => {
         description: "Tạo mới user thành công",
         showProgress: true,
       });
+    } else {
+      notification.error({
+        message: "Error create user",
+        description: JSON.stringify(res.message),
+        showProgress: true,
+      });
     }
     console.log("check res: ", res.data);
   };
