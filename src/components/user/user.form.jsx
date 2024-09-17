@@ -8,14 +8,14 @@ const UserForm = () => {
   const [phone, setPhone] = useState("");
   const handleClickBtn = async () => {
     let res = await createUserApi(fullName, email, password, phone);
-    if (res.data && res.data.data) {
+    if (res.data) {
       notification.success({
         message: "create user",
         description: "Tạo mới user thành công",
         showProgress: true,
       });
     }
-    console.log("check res: ", res.data.data);
+    console.log("check res: ", res.data);
   };
   return (
     <div className="user-form" style={{ margin: "20px 0" }}>
