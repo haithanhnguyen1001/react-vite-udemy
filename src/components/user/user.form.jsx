@@ -54,7 +54,14 @@ const UserForm = () => {
           <span>Phone number</span>
           <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
         </div>
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <h3>Table User</h3>
           <Button type="primary" onClick={() => handleClickBtn()}>
             Create User
           </Button>
