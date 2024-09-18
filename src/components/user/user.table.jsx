@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UpdateUserModal from "./update.user.modal";
 const UserTable = (props) => {
-  const { dataUsers } = props;
+  const { dataUsers, loadUser } = props;
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState(null);
   const columns = [
@@ -53,6 +53,7 @@ const UserTable = (props) => {
         setIsModalUpdateOpen={setIsModalUpdateOpen}
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
+        loadUser={loadUser}
       />
     </>
   );
