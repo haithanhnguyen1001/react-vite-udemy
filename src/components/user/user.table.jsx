@@ -1,18 +1,41 @@
-import { Space, Table, Tag } from "antd";
-import { fetchAllUserAPI } from "../../services/api.service";
+import { message, Popconfirm, Space, Table, Tag } from "antd";
+import { deleteUserApi, fetchAllUserAPI } from "../../services/api.service";
 import { useEffect, useState } from "react";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import UpdateUserModal from "./update.user.modal";
+import ViewUserDetail from "./view.user.detail";
 const UserTable = (props) => {
   const { dataUsers, loadUser } = props;
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState(null);
+  const [isModalUserInfoOpen, setIsModalUserInfoOpen] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+
+  const handDeleteUser = async (id) => {
+    let res = await deleteUserApi(id);
+    if (res.data) {
+      message.success("Xóa thành công user");
+      await loadUser();
+    } else {
+      message.error(JSON.stringify(res.message));
+    }
+  };
   const columns = [
     {
       title: "Id",
       dataIndex: "_id",
       render: (_, record) => {
-        return <a href="#">{record._id}</a>;
+        return (
+          <a
+            href="#"
+            onClick={() => {
+              setUserInfo(record);
+              setIsModalUserInfoOpen(true);
+            }}
+          >
+            {record._id}
+          </a>
+        );
       },
     },
     {
@@ -39,7 +62,16 @@ const UserTable = (props) => {
             }}
             style={{ cursor: "pointer", color: "green" }}
           />
-          <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+          <Popconfirm
+            title="Delete user"
+            description="Bạn có chắc chắn muốn xóa user này?"
+            onConfirm={() => handDeleteUser(record._id)}
+            okText="Xóa"
+            cancelText="Không"
+            placement="left"
+          >
+            <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+          </Popconfirm>
         </div>
       ),
     },
@@ -54,6 +86,12 @@ const UserTable = (props) => {
         dataUpdate={dataUpdate}
         setDataUpdate={setDataUpdate}
         loadUser={loadUser}
+      />
+      <ViewUserDetail
+        isModalUserInfoOpen={isModalUserInfoOpen}
+        setIsModalUserInfoOpen={setIsModalUserInfoOpen}
+        userInfo={userInfo}
+        setUserInfo={setUserInfo}
       />
     </>
   );
