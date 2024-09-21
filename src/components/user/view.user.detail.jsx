@@ -1,9 +1,18 @@
-import { Button, Drawer } from "antd";
+import { Button, Drawer, notification } from "antd";
 import { useEffect, useState } from "react";
+import {
+  handleUploadFile,
+  updateUserWithAvatarApi,
+} from "../../services/api.service";
 
 const ViewUserDetail = (props) => {
-  const { isModalUserInfoOpen, setIsModalUserInfoOpen, userInfo, setUserInfo } =
-    props;
+  const {
+    isModalUserInfoOpen,
+    setIsModalUserInfoOpen,
+    userInfo,
+    setUserInfo,
+    loadUser,
+  } = props;
 
   const [id, setId] = useState("");
   const [fullName, setFullName] = useState("");
@@ -22,6 +31,8 @@ const ViewUserDetail = (props) => {
   const onClose = () => {
     setIsModalUserInfoOpen(false);
     setUserInfo(null);
+    setSelectedFile(null);
+    setPreview(null);
   };
 
   const handleOnChangeFile = (event) => {
@@ -37,7 +48,39 @@ const ViewUserDetail = (props) => {
       }
     }
   };
-
+  const handleUpdateUserAvatar = async () => {
+    //Step 1: upload file
+    const resUpload = await handleUploadFile(selectedFile, "avatar");
+    if (resUpload.data) {
+      const avatar = resUpload.data.fileUploaded;
+      //Step 2: update user
+      const resUpdateAvatar = await updateUserWithAvatarApi(
+        avatar,
+        userInfo._id,
+        userInfo.fullName,
+        userInfo.phone
+      );
+      if (resUpdateAvatar.data) {
+        onClose();
+        await loadUser();
+        notification.success({
+          message: "Update user avatar",
+          description: "Cập nhật avatar thành công",
+        });
+      } else {
+        notification.error({
+          message: "Error update user avatar",
+          description: JSON.stringify(resUpdateAvatar.message),
+        });
+      }
+    } else {
+      notification.error({
+        message: "Error upload file",
+        description: JSON.stringify(resUpload.message),
+      });
+      return;
+    }
+  };
   return (
     <Drawer
       width={"40vw"}
@@ -94,7 +137,11 @@ const ViewUserDetail = (props) => {
               <div style={{ margin: "15px auto", border: "1px dashed #ccc" }}>
                 <img width={"300px"} src={preview} alt="" />
               </div>
-              <Button type="primary" style={{ width: "fit-content" }}>
+              <Button
+                type="primary"
+                style={{ width: "fit-content" }}
+                onClick={() => handleUpdateUserAvatar()}
+              >
                 Save
               </Button>
             </>

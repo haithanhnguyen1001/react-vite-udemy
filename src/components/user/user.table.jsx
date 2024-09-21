@@ -92,6 +92,7 @@ const UserTable = (props) => {
         setIsModalUserInfoOpen={setIsModalUserInfoOpen}
         userInfo={userInfo}
         setUserInfo={setUserInfo}
+        loadUser={loadUser}
       />
     </>
   );
