@@ -9,6 +9,8 @@ const ViewUserDetail = (props) => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+  const [preview, setPreview] = useState();
   useEffect(() => {
     if (userInfo) {
       setId(userInfo._id);
@@ -21,6 +23,21 @@ const ViewUserDetail = (props) => {
     setIsModalUserInfoOpen(false);
     setUserInfo(null);
   };
+
+  const handleOnChangeFile = (event) => {
+    if (!event.target.files || event.target.files.length === 0) {
+      setSelectedFile(null);
+      setPreview(null);
+      return;
+    } else {
+      const file = event.target.files[0];
+      if (file) {
+        setSelectedFile(file);
+        setPreview(URL.createObjectURL(file));
+      }
+    }
+  };
+
   return (
     <Drawer
       width={"40vw"}
@@ -42,7 +59,7 @@ const ViewUserDetail = (props) => {
           <p>
             <b>Phone number:</b> {phone}
           </p>
-          <div style={{ margin: "0 auto" }}>
+          <div style={{ margin: "15px auto", border: "1px solid #ccc" }}>
             <img
               width={"300px"}
               src={`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
@@ -64,11 +81,24 @@ const ViewUserDetail = (props) => {
             >
               Upload Avatar
             </label>
-            <input type="file" name="" id="btnUpload" hidden />
+            <input
+              type="file"
+              name=""
+              id="btnUpload"
+              hidden
+              onChange={handleOnChangeFile}
+            />
           </div>
-          <Button type="primary" style={{ width: "fit-content" }}>
-            Upload Avatar
-          </Button>
+          {preview && (
+            <>
+              <div style={{ margin: "15px auto", border: "1px dashed #ccc" }}>
+                <img width={"300px"} src={preview} alt="" />
+              </div>
+              <Button type="primary" style={{ width: "fit-content" }}>
+                Save
+              </Button>
+            </>
+          )}
         </div>
       ) : (
         <div>
