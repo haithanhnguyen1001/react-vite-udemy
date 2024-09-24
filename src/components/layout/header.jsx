@@ -1,6 +1,8 @@
 import {
+  AliwangwangOutlined,
   AuditOutlined,
   HomeOutlined,
+  LoginOutlined,
   SettingOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
@@ -11,7 +13,7 @@ import { AuthContext } from "../context/auth.context";
 // import "./header.css";
 const Header = () => {
   const [current, setCurrent] = useState("home");
-  const data = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
@@ -32,23 +34,29 @@ const Header = () => {
       key: "books",
       icon: <AuditOutlined />,
     },
-    {
-      label: "Cài đặt",
-      key: "setting",
-      icon: <SettingOutlined />,
-      children: [
-        {
-          label: <Link to={"/login"}>Đăng nhập</Link>,
-          key: "login",
-        },
-        {
-          label: "Đăng xuất",
-          key: "logout",
-        },
-      ],
-    },
+
+    ...(!user.id
+      ? [
+          {
+            label: <Link to={"/login"}>Đăng nhập</Link>,
+            key: "login",
+            icon: <LoginOutlined />,
+          },
+        ]
+      : [
+          {
+            label: `Welcome ${user.fullName}`,
+            key: "setting",
+            icon: <AliwangwangOutlined />,
+            children: [
+              {
+                label: "Đăng xuất",
+                key: "logout",
+              },
+            ],
+          },
+        ]),
   ];
-  console.log(data);
   return (
     <Menu
       onClick={onClick}
