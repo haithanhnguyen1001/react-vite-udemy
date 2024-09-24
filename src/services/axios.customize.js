@@ -12,6 +12,15 @@ const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
+    if (
+      typeof window !== "undefined" &&
+      window &&
+      window.localStorage &&
+      window.localStorage.getItem("access_token")
+    ) {
+      config.headers.Authorization =
+        "Bearer " + window.localStorage.getItem("access_token");
+    }
     return config;
   },
   function (error) {
