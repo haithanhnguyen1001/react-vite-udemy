@@ -5,11 +5,13 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { Menu } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 // import "./header.css";
 const Header = () => {
   const [current, setCurrent] = useState("home");
+  const data = useContext(AuthContext);
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);
@@ -46,6 +48,7 @@ const Header = () => {
       ],
     },
   ];
+  console.log(data);
   return (
     <Menu
       onClick={onClick}
