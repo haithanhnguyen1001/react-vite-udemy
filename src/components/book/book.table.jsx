@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import { fetchBookWithPaginate } from "../../services/api.service";
 import { Button, Table } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import ViewBookDetail from "./view.book.detail";
 
 const BookTable = () => {
   const [bookData, setBookData] = useState([]);
   const [current, setCurrent] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(0);
+
+  const [isModalDetailBookOpen, setIsModalDetailBookOpen] = useState(false);
+  const [bookInfo, setBookInfo] = useState({});
 
   useEffect(() => {
     loadBook();
@@ -44,7 +48,16 @@ const BookTable = () => {
       title: "Id",
       dataIndex: "_id",
       render: (_, record) => {
-        return <a>{record._id}</a>;
+        return (
+          <a
+            onClick={() => {
+              setIsModalDetailBookOpen(true);
+              setBookInfo(record);
+            }}
+          >
+            {record._id}
+          </a>
+        );
       },
     },
     {
@@ -117,6 +130,12 @@ const BookTable = () => {
           showSizeChanger: true,
         }}
         onChange={onChange}
+      />
+      <ViewBookDetail
+        isModalDetailBookOpen={isModalDetailBookOpen}
+        setIsModalDetailBookOpen={setIsModalDetailBookOpen}
+        bookInfo={bookInfo}
+        setBookInfo={setBookInfo}
       />
     </>
   );
