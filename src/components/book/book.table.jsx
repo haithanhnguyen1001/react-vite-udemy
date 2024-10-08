@@ -3,6 +3,7 @@ import { fetchBookWithPaginate } from "../../services/api.service";
 import { Button, Table } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ViewBookDetail from "./view.book.detail";
+import ModalCreateBook from "./modal.create.book";
 
 const BookTable = () => {
   const [bookData, setBookData] = useState([]);
@@ -12,6 +13,8 @@ const BookTable = () => {
 
   const [isModalDetailBookOpen, setIsModalDetailBookOpen] = useState(false);
   const [bookInfo, setBookInfo] = useState({});
+
+  const [isModalCreateBookOpen, setIsModalCreateBookOpen] = useState(false);
 
   useEffect(() => {
     loadBook();
@@ -110,7 +113,14 @@ const BookTable = () => {
         }}
       >
         <h2>Table Book</h2>
-        <Button type="primary">Thêm mới</Button>
+        <Button
+          type="primary"
+          onClick={() => {
+            setIsModalCreateBookOpen(true);
+          }}
+        >
+          Thêm mới
+        </Button>
       </div>
       <Table
         dataSource={bookData}
@@ -136,6 +146,11 @@ const BookTable = () => {
         setIsModalDetailBookOpen={setIsModalDetailBookOpen}
         bookInfo={bookInfo}
         setBookInfo={setBookInfo}
+      />
+      <ModalCreateBook
+        isModalCreateBookOpen={isModalCreateBookOpen}
+        setIsModalCreateBookOpen={setIsModalCreateBookOpen}
+        loadBook={loadBook}
       />
     </>
   );
