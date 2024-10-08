@@ -106,7 +106,6 @@ const createBookApi = (
     quantity,
     category,
   };
-  console.log(data);
   return axios.post(URL_BACKEND, data);
 };
 export {

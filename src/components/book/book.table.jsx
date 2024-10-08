@@ -4,6 +4,7 @@ import { Button, Table } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ViewBookDetail from "./view.book.detail";
 import ModalCreateBook from "./modal.create.book";
+import CreateBookUncontrol from "./create.book.uncontrol";
 
 const BookTable = () => {
   const [bookData, setBookData] = useState([]);
@@ -147,7 +148,12 @@ const BookTable = () => {
         bookInfo={bookInfo}
         setBookInfo={setBookInfo}
       />
-      <ModalCreateBook
+      {/* <ModalCreateBook
+        isModalCreateBookOpen={isModalCreateBookOpen}
+        setIsModalCreateBookOpen={setIsModalCreateBookOpen}
+        loadBook={loadBook}
+      /> */}
+      <CreateBookUncontrol
         isModalCreateBookOpen={isModalCreateBookOpen}
         setIsModalCreateBookOpen={setIsModalCreateBookOpen}
         loadBook={loadBook}
