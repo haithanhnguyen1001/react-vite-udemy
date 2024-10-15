@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchBookWithPaginate } from "../../services/api.service";
-import { Button, Table } from "antd";
+import {
+  deleteBookApi,
+  fetchBookWithPaginate,
+} from "../../services/api.service";
+import { Button, notification, Popconfirm, Table } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ViewBookDetail from "./view.book.detail";
 import ModalCreateBook from "./modal.create.book";
@@ -44,6 +47,21 @@ const BookTable = () => {
         setPageSize(+pagination.pageSize);
       }
     }
+  };
+  const handleDeleteBook = async (id) => {
+    const res = await deleteBookApi(id);
+    if (res && res.data) {
+      notification.success({
+        message: "Delete book",
+        description: "Xoá thành công",
+      });
+    } else {
+      notification.error({
+        message: "Delete book error",
+        description: JSON.stringify(res.message),
+      });
+    }
+    await loadBook();
   };
   const columns = [
     {
@@ -107,7 +125,16 @@ const BookTable = () => {
                 setDataUpdate(record);
               }}
             />
-            <DeleteOutlined style={{ cursor: "pointer", color: "green" }} />
+            <Popconfirm
+              title="Delete book"
+              description="Are you sure to delete this book?"
+              onConfirm={() => handleDeleteBook(record._id)}
+              okText="Yes"
+              cancelText="No"
+              placement="left"
+            >
+              <DeleteOutlined style={{ cursor: "pointer", color: "green" }} />
+            </Popconfirm>
           </div>
         );
       },
