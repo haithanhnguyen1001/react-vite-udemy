@@ -18,8 +18,8 @@ const UserPage = () => {
     const res = await fetchAllUserAPI(current, pageSize);
     if (res.data) {
       setDataUsers(res.data.result);
-      setCurrent(res.data.meta.current);
-      setPageSize(res.data.meta.pageSize);
+      // setCurrent(res.data.meta.current);
+      // setPageSize(res.data.meta.pageSize);
       setTotal(res.data.meta.total);
     }
   };

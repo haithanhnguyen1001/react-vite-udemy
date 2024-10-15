@@ -24,17 +24,20 @@ const BookTable = () => {
 
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState({});
+  const [loadingTable, setLoadingTable] = useState(false);
   useEffect(() => {
     loadBook();
   }, [current, pageSize]);
   const loadBook = async () => {
+    setLoadingTable(true);
     const res = await fetchBookWithPaginate(current, pageSize);
     if (res.data) {
       setBookData(res.data.result);
-      setCurrent(res.data.meta.current);
-      setPageSize(res.data.meta.pageSize);
+      // setCurrent(res.data.meta.current);
+      // setPageSize(res.data.meta.pageSize);
       setTotal(res.data.meta.total);
     }
+    setLoadingTable(false);
   };
   const onChange = (pagination, filters, sorter, extra) => {
     if (pagination && pagination.current) {
@@ -163,6 +166,7 @@ const BookTable = () => {
       <Table
         dataSource={bookData}
         columns={columns}
+        loading={loadingTable}
         rowKey={"_id"}
         pagination={{
           current: current,
