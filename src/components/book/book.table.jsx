@@ -5,6 +5,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import ViewBookDetail from "./view.book.detail";
 import ModalCreateBook from "./modal.create.book";
 import CreateBookUncontrol from "./create.book.uncontrol";
+import UpdateBookControl from "./update.book.control";
 
 const BookTable = () => {
   const [bookData, setBookData] = useState([]);
@@ -17,6 +18,8 @@ const BookTable = () => {
 
   const [isModalCreateBookOpen, setIsModalCreateBookOpen] = useState(false);
 
+  const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState({});
   useEffect(() => {
     loadBook();
   }, [current, pageSize]);
@@ -96,7 +99,13 @@ const BookTable = () => {
       render: (_, record) => {
         return (
           <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            <EditOutlined style={{ cursor: "pointer", color: "green" }} />
+            <EditOutlined
+              style={{ cursor: "pointer", color: "green" }}
+              onClick={() => {
+                setIsModalUpdateOpen(true);
+                setDataUpdate(record);
+              }}
+            />
             <DeleteOutlined style={{ cursor: "pointer", color: "green" }} />
           </div>
         );
@@ -156,6 +165,13 @@ const BookTable = () => {
       <CreateBookUncontrol
         isModalCreateBookOpen={isModalCreateBookOpen}
         setIsModalCreateBookOpen={setIsModalCreateBookOpen}
+        loadBook={loadBook}
+      />
+      <UpdateBookControl
+        isModalUpdateOpen={isModalUpdateOpen}
+        setIsModalUpdateOpen={setIsModalUpdateOpen}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
         loadBook={loadBook}
       />
     </>
